@@ -4,6 +4,7 @@ import com.szabodev.example.product.microservice.dto.ProductDTO;
 import com.szabodev.example.product.microservice.model.Product;
 import com.szabodev.example.product.microservice.repository.ProductRepository;
 import com.szabodev.example.product.microservice.service.mapper.ProductMapper;
+import com.szabodev.example.product.microservice.service.stock.ProductStockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     private final ProductMapper productMapper;
+
+    private final ProductStockService productStockService;
 
     @Override
     public ProductDTO save(ProductDTO productDTO) {
@@ -32,7 +35,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> findAll() {
-        return productMapper.toDTOs((List<Product>) productRepository.findAll());
+        List<ProductDTO> productDTOS = productMapper.toDTOs((List<Product>) productRepository.findAll());
+        productDTOS.forEach(product -> product.setAvailable(productStockService.findAvailableCountForProduct(product.getId())));
+        return productDTOS;
     }
 
     @Override

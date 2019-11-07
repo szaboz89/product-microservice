@@ -24,4 +24,6 @@ public class ProductDTO {
     private Integer minimumStock;
 
     private BigDecimal price;
+
+    private Integer available;
 }

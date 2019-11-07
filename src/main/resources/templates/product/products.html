@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>products</title>
+    <title>Product</title>
     <style>
         table {
             border-collapse: collapse;
@@ -35,6 +35,7 @@
         <th>Description</th>
         <th>Price</th>
         <th>Minimum Stock</th>
+        <th>Available</th>
         <th>Options</th>
     </tr>
     </thead>
@@ -45,6 +46,7 @@
         <td th:text="${product.description}">Description</td>
         <td th:text="${product.price}">Price</td>
         <td th:text="${product.minimumStock}">Minimum Stock</td>
+        <td th:text="${product.available != null ? product.available : 'N/A'}">Available</td>
         <td>
             <a th:href="@{'/products/' + ${product.id} + '/edit'}">
                 Edit
