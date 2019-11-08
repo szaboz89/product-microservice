@@ -5,7 +5,7 @@ import com.szabodev.example.product.microservice.dto.ProductStockDTO;
 import com.szabodev.example.product.microservice.model.Product;
 import com.szabodev.example.product.microservice.repository.ProductRepository;
 import com.szabodev.example.product.microservice.service.mapper.ProductMapper;
-import com.szabodev.example.product.microservice.service.stock.ProductStockService;
+import com.szabodev.example.product.microservice.service.remote.ProductStockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,11 +39,11 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDTO> productDTOS = productMapper.toDTOs((List<Product>) productRepository.findAll());
         if (getAvailableCount) {
             productDTOS.forEach(product -> {
-                ProductStockDTO stock = productStockService.findAvailableCountForProduct(product.getId());
-                if (stock != null) {
-                    product.setAvailable(stock.getAvailable());
-                    product.setRequiredAmount(stock.getRequiredAmount());
-                }
+                Optional<ProductStockDTO> stock = productStockService.findAvailableCountForProduct(product.getId());
+                stock.ifPresent(productStockDTO -> {
+                    product.setAvailable(productStockDTO.getAvailable());
+                    product.setRequiredAmount(productStockDTO.getRequiredAmount());
+                });
             });
         }
         return productDTOS;
