@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductStockDTO {
+public class ProductDemandDTO {
 
     private Long productId;
-
-    private Integer available;
-
     private Integer requiredAmount;
 }

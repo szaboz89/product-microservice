@@ -1,6 +1,8 @@
 package com.szabodev.example.product.microservice.service.stock;
 
+import com.szabodev.example.product.microservice.dto.ProductStockDTO;
+
 public interface ProductStockService {
 
-    Integer findAvailableCountForProduct(Long productId);
+    ProductStockDTO findAvailableCountForProduct(Long productId);
 }

@@ -11,7 +11,7 @@ public interface ProductService {
 
     Optional<ProductDTO> findById(Long id);
 
-    List<ProductDTO> findAll();
+    List<ProductDTO> findAll(boolean getAvailableCount);
 
     void deleteById(Long id);
 }

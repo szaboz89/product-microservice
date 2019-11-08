@@ -1,6 +1,7 @@
 package com.szabodev.example.product.microservice.service;
 
 import com.szabodev.example.product.microservice.dto.ProductDTO;
+import com.szabodev.example.product.microservice.dto.ProductStockDTO;
 import com.szabodev.example.product.microservice.model.Product;
 import com.szabodev.example.product.microservice.repository.ProductRepository;
 import com.szabodev.example.product.microservice.service.mapper.ProductMapper;
@@ -34,9 +35,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> findAll() {
+    public List<ProductDTO> findAll(boolean getAvailableCount) {
         List<ProductDTO> productDTOS = productMapper.toDTOs((List<Product>) productRepository.findAll());
-        productDTOS.forEach(product -> product.setAvailable(productStockService.findAvailableCountForProduct(product.getId())));
+        if (getAvailableCount) {
+            productDTOS.forEach(product -> {
+                ProductStockDTO stock = productStockService.findAvailableCountForProduct(product.getId());
+                if (stock != null) {
+                    product.setAvailable(stock.getAvailable());
+                    product.setRequiredAmount(stock.getRequiredAmount());
+                }
+            });
+        }
         return productDTOS;
     }
 

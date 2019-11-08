@@ -21,9 +21,13 @@ public class ProductDTO {
 
     private String description;
 
+    @NotNull
     private Integer minimumStock;
 
+    @NotNull
     private BigDecimal price;
 
     private Integer available;
+
+    private Integer requiredAmount;
 }

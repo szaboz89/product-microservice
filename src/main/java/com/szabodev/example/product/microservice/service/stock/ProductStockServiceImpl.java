@@ -17,10 +17,9 @@ public class ProductStockServiceImpl implements ProductStockService {
     private String apiUrl;
 
     @Override
-    public Integer findAvailableCountForProduct(Long productId) {
+    public ProductStockDTO findAvailableCountForProduct(Long productId) {
         try {
-            ProductStockDTO stock = restTemplate.getForObject(apiUrl + "/product-stocks/" + productId, ProductStockDTO.class);
-            return stock != null ? stock.getAvailable() : 0;
+            return restTemplate.getForObject(apiUrl + "/product-stocks/" + productId, ProductStockDTO.class);
         } catch (HttpClientErrorException e) {
             // stock details for product id not available
             return null;

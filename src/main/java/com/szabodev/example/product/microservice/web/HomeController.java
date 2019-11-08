@@ -27,7 +27,7 @@ public class HomeController {
 
     @GetMapping({"/", "/products"})
     public String productList(Model model) {
-        model.addAttribute("products", productService.findAll());
+        model.addAttribute("products", productService.findAll(true));
         return PRODUCT_PRODUCTS;
     }
 

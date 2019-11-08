@@ -25,7 +25,9 @@ public class Product implements Serializable {
 
     private String description;
 
+    @Column(nullable = false)
     private Integer minimumStock;
 
+    @Column(nullable = false)
     private BigDecimal price;
 }
